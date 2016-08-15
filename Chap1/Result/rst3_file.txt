@@ -1,0 +1,27 @@
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -s -u root -k -m file -a 'path=/tmp/test state=directory mode=0700 owner=root'
+SSH password: 
+pi | SUCCESS => {
+    "changed": true, 
+    "gid": 0, 
+    "group": "root", 
+    "mode": "0700", 
+    "owner": "root", 
+    "path": "/tmp/test", 
+    "size": 4096, 
+    "state": "directory", 
+    "uid": 0
+}
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ 
+
+pi@raspberrypi:~ $ ls -la /tmp
+total 32
+drwxrwxrwt  8 root root 4096 Aug  9 08:23 .
+drwxr-xr-x 21 root root 4096 May 27 11:41 ..
+drwxrwxrwt  2 root root 4096 Aug  9 07:12 .font-unix
+drwxrwxrwt  2 root root 4096 Aug  9 07:12 .ICE-unix
+drwx------  2 root root 4096 Aug  9 08:23 test
+drwxrwxrwt  2 root root 4096 Aug  9 07:12 .Test-unix
+drwxrwxrwt  2 root root 4096 Aug  9 07:12 .X11-unix
+drwxrwxrwt  2 root root 4096 Aug  9 07:12 .XIM-unix
+pi@raspberrypi:~ $ 
+

@@ -1,0 +1,11 @@
+
+
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -k -m command -a 'rm -rf /tmp/testing removes=/tmp/testing'
+SSH password: 
+pi | SUCCESS | rc=0 >>
+
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -k -m command -a 'rm -rf /tmp/testing removes=/tmp/testing'
+SSH password: 
+ [WARNING]: Failure when attempting to use callback plugin (<ansible.plugins.callback.minimal.CallbackModule object at
+0x10c738d50>): coercing to Unicode: need string or buffer, bool found
+

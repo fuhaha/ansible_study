@@ -1,0 +1,6 @@
+jeonsungwookui-MacBook-Air:~ jeonsungwook$ ansible pi -k -m shell -a '/home/pi/installer.sh > /home/pi/output.log creates=/home/pi/output.log'
+SSH password: 
+pi | SUCCESS | rc=0 >>
+
+
+jeonsungwookui-MacBook-Air:~ jeonsungwook$ 

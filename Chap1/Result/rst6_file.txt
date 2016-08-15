@@ -1,0 +1,16 @@
+
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -k -m file -a 'path=/tmp/testing state=absent'
+SSH password: 
+pi | SUCCESS => {
+    "changed": false, 
+    "path": "/tmp/testing", 
+    "state": "absent"
+}
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -k -m file -a 'path=/tmp/testing state=absent'
+SSH password: 
+pi | SUCCESS => {
+    "changed": true, 
+    "path": "/tmp/testing", 
+    "state": "absent"
+}
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ 

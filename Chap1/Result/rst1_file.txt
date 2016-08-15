@@ -1,0 +1,14 @@
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -s -u root -k -m file -a 'path=/etc/fstab'
+SSH password: 
+pi | SUCCESS => {
+    "changed": false, 
+    "gid": 0, 
+    "group": "root", 
+    "mode": "0644", 
+    "owner": "root", 
+    "path": "/etc/fstab", 
+    "size": 302, 
+    "state": "file", 
+    "uid": 0
+}
+

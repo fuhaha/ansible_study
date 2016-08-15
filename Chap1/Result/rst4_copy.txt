@@ -1,0 +1,8 @@
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ ansible pi -s -u root -k -m copy -a "src=/etc/fstab dest=/tmp/fstab"
+SSH password: 
+pi | FAILED! => {
+    "changed": false, 
+    "failed": true, 
+    "msg": "could not find src=/etc/fstab"
+}
+jeonsungwookui-MacBook-Air:_OS jeonsungwook$ 
