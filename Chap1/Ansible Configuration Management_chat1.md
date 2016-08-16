@@ -38,14 +38,14 @@ $ sudo make install
 ~~~~
 
 ###3. Setting up Ansible
-- Machines Inventory
+* Machines Inventory
 
-	1) 설명
+	* 설명
 		* Location : /etc/ansible/hosts
 		* Format : Ini file format
 		* Group name : []
 
-	2) Ex
+	* Ex
 		~~~~
 		[webservers]
 		site01
@@ -58,7 +58,7 @@ $ sudo make install
 		bastion
 		~~~~
 
-	3) Ping Module : Server 연결 확인
+	* Ping Module : Server 연결 확인
 		~~~~
 		$ ansible site01 -u root -k -m ping
 		~~~~
