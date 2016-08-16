@@ -16,7 +16,7 @@ Ansible 문서 참조 : <http://docs.ansible.com/ansible/>
 
 ###2. Installation methods
 - Installing from your distribution - 최신버전이 아닐 수 있음
-• Fedora, RHEL, CentOS, and compatible:
+- Fedora, RHEL, CentOS, and compatible:
 ~~~~
 $ sudo yum install ansible
 ~~~~
@@ -39,10 +39,12 @@ $ sudo make install
 
 ###3. Setting up Ansible
 - Machines Inventory
+
 	1) 설명
 		* Location : /etc/ansible/hosts
 		* Format : Ini file format
 		* Group name : []
+
 	2) Ex
 		~~~~
 		[webservers]
@@ -85,12 +87,14 @@ $ sudo make install
 
 - Machines Inventory user
 	1) 설명
+
 		* Location : /etc/ansible/hosts
 		* Format : ini
 		* Username : ansible_ssh_user
 		* Port : ansible_ssh_port
 
 	2) Ex
+
 	~~~~
 	[webservers] #1
 	site01 ansible_ssh_user=root #2
@@ -124,11 +128,12 @@ $ sudo make install
 
 - Setting it up on Windows
 	1) Create some Windows machines in your inventory
+
 		* 설정
 			-- Location : /etc/ansible/hosts ?? 확인 필요
 			-- Format : ini
 		* EX
-			~~~~
+		~~~~
 			[windows]
 			dc.ad.example.com
 			web01.ad.example.com
@@ -138,7 +143,7 @@ $ sudo make install
 			ansible_ssh_user=daniel
 			ansible_ssh_pass=s3cr3t
 			ansible_ssh_port=5986
-			~~~~
+		~~~~
 
 	2) Install the winrm Python library on the controller machine
 		~~~~
@@ -151,24 +156,23 @@ $ sudo make install
 		~~~~
 
 ###4. First steps with Ansible
-	1) Moduel
-		- Ansible은 원격 hosts에서 직접 수행(command-line)하거나 Playbooks를 통해 수행할 수 있는 여러개의 modules를 전송한다.
-		- 사용자는 자신만의 module을 만들수 있고, 이 Module들은 services, package or file, handle executing system commands와 같은 system resource를 control한다.
-		- Ansible module은 "key=value"와 같은 구조로 arguments를 받는다.
-		- 원격에서 작업을 수행할 수 있으며, JSON형태로 반환한다.
-		- Module은 Module은 묶어서 사용할 수 있다.
-		- Module은 주로 Playbooks에서 사용할 수 있으며 command-line에서 사용할 수 있다. 
-		- ping은 특별한 기능은 없지만 ansible의 주용 기능이 수행 가능한지 여부를 확인한다.
+1) Moduel
+	- Ansible은 원격 hosts에서 직접 수행(command-line)하거나 Playbooks를 통해 수행할 수 있는 여러개의 modules를 전송한다.
+	- 사용자는 자신만의 module을 만들수 있고, 이 Module들은 services, package or file, handle executing system commands와 같은 system resource를 control한다.
+	- Ansible module은 "key=value"와 같은 구조로 arguments를 받는다.
+	- 원격에서 작업을 수행할 수 있으며, JSON형태로 반환한다.
+	- Module은 Module은 묶어서 사용할 수 있다.
+	- Module은 주로 Playbooks에서 사용할 수 있으며 command-line에서 사용할 수 있다. 
+	- ping은 특별한 기능은 없지만 ansible의 주용 기능이 수행 가능한지 여부를 확인한다.
 
-	2) command-line 전달 정보
-		- 특정 module에 적용되기를 원하는 장비를 맞추어주는 host pattern : 정규식 (group name, a machine name, a glob, and a tilde (~),*(all))
-		- 특정 module의 이름과 선택적으로 해당 module에 전달을 원하는 인수
+2) command-line 전달 정보
+	- 특정 module에 적용되기를 원하는 장비를 맞추어주는 host pattern : 정규식 (group name, a machine name, a glob, and a tilde (~),*(all))
+	- 특정 module의 이름과 선택적으로 해당 module에 전달을 원하는 인수
 
-	3) setup module
-		- setup은 설정되어진 node에 접속하여 시스템 정보를 수집하여 반환한다. 
-		- command-line에서는 유용하지 않지만, playbook에서는 반환값을 사용할 수 있다. 
-		- Ex :
-
+3) setup module
+	- setup은 설정되어진 node에 접속하여 시스템 정보를 수집하여 반환한다. 
+	- command-line에서는 유용하지 않지만, playbook에서는 반환값을 사용할 수 있다. 
+	- Ex :
 ~~~~
 ansible machinename -u root -k -m setup
 ansible pi -s -u root -k -m setup
