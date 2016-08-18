@@ -1,0 +1,7 @@
+---
+- name: Setup BIND
+  hosts: pi
+
+  tasks:
+  - name: configure BIND
+    template: src=templates/named.conf.j2 dest=/etc/named.conf owner=root group=root mode=0640

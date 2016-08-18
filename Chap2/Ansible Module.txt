@@ -1,0 +1,19 @@
+Ansible Module
+
+Bmc Modules : Boot devices, Power management
+Cloud Modules : Amazon AWS관련 모듈 
+Clustering Modules : Clustering관련 모듈
+Commands Modules : Execute command
+Database Modules : Database관련 Module (Influxdb,mongodb,redis,riak,mssql,mysql,Postgresql,Vertica)
+Files Modules : File Management Module
+Inventory Modules
+Messaging Modules : rabbitmq관리 module
+Monitoring Modules
+Network Modules
+Notification Modules
+Packaging Modules
+Source Control Modules
+System Modules
+Utilities Modules
+Web Infrastructure Modules
+Windows Modules

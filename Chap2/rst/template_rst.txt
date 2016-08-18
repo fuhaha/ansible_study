@@ -1,0 +1,15 @@
+jeonsungwookui-MacBook-Air:Chap2 jeonsungwook$ ansible-playbook -k -s config_named.yml 
+SSH password: 
+
+PLAY [Setup BIND] **************************************************************
+
+TASK [setup] *******************************************************************
+ok: [pi]
+
+TASK [configure BIND] **********************************************************
+changed: [pi]
+
+PLAY RECAP *********************************************************************
+pi                         : ok=2    changed=1    unreachable=0    failed=0   
+
+jeonsungwookui-MacBook-Air:Chap2 jeonsungwook$ 
