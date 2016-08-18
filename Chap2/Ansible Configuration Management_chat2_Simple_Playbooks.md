@@ -1,7 +1,7 @@
 # Ansible Configuration Management
 Ansible 문서 참조 : <http://docs.ansible.com/ansible/>
 
-작상자 : 전성욱(codetree@gmail.com)
+작성자 : 전성욱(codetree@gmail.com)
 작성일 : 20160816
 
 ## Chapter 2 : Simple Playbooks
@@ -9,9 +9,9 @@ Ansible 문서 참조 : <http://docs.ansible.com/ansible/>
 ### PlayBook 
 * 한번에 하나이상의 작업을 수행하는 기능을 제공
 * YAML file 형식을 사용한다. (<http://www.yaml.org/>,  <http://docs.ansible.com/ansible/YAMLSyntax.html>)
-* 하나의 커멘드에서 다른 커멘드로 상태를 전달 할 수 있음 (변수활용)
+* 하나의 커맨드에서 다른 커맨드로 상태를 전달 할 수 있음 (변수활용)
 * 멱등성(idempotence) 보장하기위해 노력한다.
-	(** 멱등성(idempotence): 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미한다)
+	* 멱등성(idempotence): 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미한다
 * command-line의 옵션을 Playbook Target Part에서 사용 가능 (EX : -k, -K)
 
 ~~~~
@@ -22,7 +22,7 @@ $ ansible-playbook example-play.yml
 * Target section (Hosts and Users) : 대상장비와 SSH사용자 관련 설정 
 * Variable Section : PlayBook 사용할 변수를 정의 한다.
 * Task Section : Ansible을 이용하여 실행할 모듈을 순서대로 열거한다.
-* Handlers section : Task 수행 결과 무언가 변경이 발생 하였을 때 "notify"에 기술한 Handler가 호출된다.
+* Handlers section : Task 수행 결과 무엇인가 변경이 발생 하였을 때 "notify"에 기술한 Handler가 호출된다.
 
 ~~~~
 ---
@@ -61,9 +61,11 @@ $ ansible-playbook example-play.yml
 | connection | 대상장비 접속 방법 : local 이나 ssh |
 | gather_facts | setup module 자동 실행여부, (default :  setup module 실행) |
 
-  * 아니다:no,false,off,0
-  * 맞다:yes,true,on,1
+	* 아니다:no,false,off,0
+	* 맞다:yes,true,on,1
+
 ### The variable section
+
 모든 장비에서 사용되면 전체 Play에 적용할 모든 설정을 변수 정의
 
 * 유지보수를 쉬운 Play를 만들수 있다
@@ -106,7 +108,7 @@ vars_prompt:
 ~~~~
 
 	* name: 변수명
-	* prompt: 프람프트 앞에 표시
+	* prompt: 프롬프트 앞에 표시
 	* private: 입력내용 화면 표시 여부 (yes:표시하지 않음)
 
 * 변수를 사용할때 표현방식
@@ -239,7 +241,7 @@ playbook module은 command-line에서 module과 차이가 있다.
 #### The template module
 설정 파일의 개요를 디자인할 수 있고 적절한 위치에 값을 입력할 수 있다.
 
-* Jinja2 template은 훨씬 복잡한 조건절, for loop, macro등을 포함할 수 있다.
+* Jinja2 template은 훨씬 복잡한 조건절, for loop, macro 등을 포함할 수 있다.
 * BIND configuration을 위한 Jinja2 configuration template 예제:
 
 ~~~~
@@ -299,7 +301,6 @@ zone "internal.example.com" IN {
 
 #### The set_fact module
 
-
 #### The pause module
 
 #### The wait_for module
@@ -326,7 +327,7 @@ zone "internal.example.com" IN {
 * Clustering Modules : Clustering관련 모듈
 * Commands Modules : Execute command
 * Database Modules : Database관련 Module 
-    * Influxdb,mongodb,redis,riak,mssql,mysql,Postgresql,Vertica
+	* Influxdb,mongodb,redis,riak,mssql,mysql,Postgresql,Vertica
 * Files Modules : File Management Module
 * Inventory Modules
 * Messaging Modules : rabbitmq관리 module
