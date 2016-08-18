@@ -16,7 +16,7 @@ Ansible 문서 참조 : <http://docs.ansible.com/ansible/>
 
 ###2. Installation methods
 - Installing from your distribution - 최신버전이 아닐 수 있음
-• Fedora, RHEL, CentOS, and compatible:
+- Fedora, RHEL, CentOS, and compatible:
 ~~~~
 $ sudo yum install ansible
 ~~~~
@@ -38,12 +38,14 @@ $ sudo make install
 ~~~~
 
 ###3. Setting up Ansible
-- Machines Inventory
-	1. 설명
+* Machines Inventory
+
+	* 설명
 		* Location : /etc/ansible/hosts
 		* Format : Ini file format
 		* Group name : []
-	2. Ex
+
+	* Ex
 		~~~~
 		[webservers]
 		site01
@@ -56,7 +58,7 @@ $ sudo make install
 		bastion
 		~~~~
 
-	3. Ping Module : Server 연결 확인
+	* Ping Module : Server 연결 확인
 		~~~~
 		$ ansible site01 -u root -k -m ping
 		~~~~
@@ -85,12 +87,14 @@ $ sudo make install
 
 - Machines Inventory user
 	1) 설명
+
 		* Location : /etc/ansible/hosts
 		* Format : ini
 		* Username : ansible_ssh_user
 		* Port : ansible_ssh_port
 
 	2) Ex
+
 	~~~~
 	[webservers] #1
 	site01 ansible_ssh_user=root #2
@@ -123,12 +127,13 @@ $ sudo make install
 	~~~~
 
 - Setting it up on Windows
-	1. Create some Windows machines in your inventory
+	1) Create some Windows machines in your inventory
+
 		* 설정
 			-- Location : /etc/ansible/hosts ?? 확인 필요
 			-- Format : ini
 		* EX
-			~~~~
+		~~~~
 			[windows]
 			dc.ad.example.com
 			web01.ad.example.com
@@ -138,14 +143,14 @@ $ sudo make install
 			ansible_ssh_user=daniel
 			ansible_ssh_pass=s3cr3t
 			ansible_ssh_port=5986
-			~~~~
+		~~~~
 
-	2. Install the winrm Python library on the controller machine
+	2) Install the winrm Python library on the controller machine
 		~~~~
 		pip install http://github.com/diyan/pywinrm/archive/master.zip
 		~~~~
 
-	3. test command
+	3) test command
 		~~~~
 		ansible web01.ad.example.com -u daniel -m win_ping
 		~~~~
@@ -168,7 +173,6 @@ $ sudo make install
 	- setup은 설정되어진 node에 접속하여 시스템 정보를 수집하여 반환한다. 
 	- command-line에서는 유용하지 않지만, playbook에서는 반환값을 사용할 수 있다. 
 	- Ex :
-
 ~~~~
 ansible machinename -u root -k -m setup
 ansible pi -s -u root -k -m setup
