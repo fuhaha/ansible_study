@@ -27,11 +27,14 @@
   * 내용
     * [1장: 앤시블 시작](Chap1/Ansible Configuration Management_chat1.md)
     * 2장: 간단한 플레이북
+      * [p35-48]
+        (Chap2/Ansible Configuration Management_chat2_Simple_Playbooks.md)
     * 3장: 플레이북 심화 내용
     * 4장: 대규모 프로젝트
     * 5장: 사용자 정의 모듈
 
   * 진행 기간 : 각 장에 한 번씩, 총 5번 모일 예정
+    (상황에 따라 변경 가능)
   * 모임 시간은 구성원들간 조율을 통해 flexible하게 진행
 
 ## 참고 자료 (Reference)
