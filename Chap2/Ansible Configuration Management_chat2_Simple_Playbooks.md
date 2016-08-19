@@ -12,7 +12,7 @@ Ansible 문서 참조 : <http://docs.ansible.com/ansible/>
 * 하나의 커맨드에서 다른 커맨드로 상태를 전달 할 수 있음 (변수활용)
 * 멱등성(idempotence) 보장하기위해 노력한다.
 	* 멱등성(idempotence): 연산을 여러 번 적용하더라도 결과가 달라지지 않는 성질을 의미한다
-* command-line의 옵션을 Playbook Target Part에서 사용 가능 (EX : -k, -K)
+* command-line의 옵션을 Playbook Target Part에서 사용 가능 (EX : -k, -s)
 
 ~~~~
 $ ansible-playbook example-play.yml
