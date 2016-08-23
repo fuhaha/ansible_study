@@ -36,7 +36,7 @@ $ ansible-playbook example-play.yml
 	- name: setup a MOTD
 	  copy:
 	    dest: /etc/motd
-	    content: "{{ motd_warning }}"		
+	    content: "{{ motd_warning }}"
 또는 
 	  copy: dest=/etc/motd content="{{ motd_warning }}"
 ~~~~
@@ -300,24 +300,368 @@ zone "internal.example.com" IN {
 ~~~~
 
 #### The set_fact module
+Ansible Play내부에 자신의 Fact를 만든다. 
+
+* Fact는 Playbook이나 Template에서 변수로 사용할 수 있다.
+* Setup module에서 생성된 인수 처럼 행동하며, Playbook에서 장비별로 동작한다.
+* Template에서 복잡한 로직을 두는 것을 피하기 위해 set_fact module을 쓴다.
+* Ram 전체크기에서 반을 InnoDB의 Buffer로 설정을 하기위한 예제: Playbook
+~~~
+---
+- name: Configure MySQL
+  hosts: mysqlservers
+  tasks:
+  - name: install MySql
+    yum:
+      name: mysql-server
+      state: installed
+
+  - name: Calculate InnoDB buffer pool size
+    set_fact:
+      innodb_buffer_pool_size_mb="{{ansible_memtotal_mb/2}}"
+
+  - name: Configure MySQL
+    template:
+      src: templates/my.cnf.j2
+      dest: /etc/my.cnf
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart mysql
+
+  - name: Start MySQL
+    service:
+      name: mysqld
+      state: started
+      enabled: yes
+
+  handlers:
+  - name: restart mysql
+    service:
+      name: mysqld
+      state: restarted
+~~~
+
+11-12 line
+~~~
+    set_fact:
+      innodb_buffer_pool_size_mb="{{ansible_memtotal_mb/2}}"
+~~~
+부분은 ansible_memtotal_mb fact로 부터 메모리 전체 크리글 가져와서 1/2계산하여 innodb_buffer_pool_size_mb fact를 만든다.
+
+* 예제: template
+~~~
+# {{ ansible_managed }}
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+# Disabling symbolic-links is recommended to prevent assorted
+security risks
+symbolic-links=0
+
+# Settings user and group are ignored when systemd is used.
+# If we need to run mysqld under a different user or group,
+# customize our systemd unit file for mysqld according to the
+# instructions in http://fedoraproject.org/wiki/Systemd
+# Configure the buffer pool
+innodb_buffer_pool_size = {{innodb_buffer_pool_size_mb|default(128) }}M
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid
+~~~
+
+14 line 
+~~~
+innodb_buffer_pool_size = {{innodb_buffer_pool_size_mb|default(128) }}M
+~~~
+에서 앞에 playbook에서 정의한 innodb_buffer_pool_size_mb fact를 이용하여 크기값을 넣는다.
+단 innodb_buffer_pool_size_mb가 앞에서 정의되지 않은 경우 'default(128)' ?? '128' 을 사용한다. (결과 확인 필요)
 
 #### The pause module
+잠시 실행을 멈추거나 특정시간을 기다리거나 사용자에게 계속 진행할지 묻는 prompt를 보여줄 경우 사용한다.
+
+* 다른작업의 결과를 사용자가 확인후 계속 진행할지 결정할때 사용
+* 발생할 수 있는 문제를 사용자에게 경고하고 계속 진행할지 옵션을 주는 경우 사용
+* Target section에서 Serial key와 함께 사용하면, Ansible이 실행할 장비가 포함된 각Group에 대하여 한번씩 요청한다.
+* 지정된 시간을 기다릴 수 있다. (잘쓰지 않는다)
+~~~
+---
+- hosts: localhost
+  tasks:
+  - name: wait on user input
+    pause:
+     prompt: "Warning! Press ENTER to continue or CTRL-C to quit."
+
+  - name: timed wait
+    pause:
+      seconds: 30
+~~~
 
 #### The wait_for module
+특정 TCP Port를 polling하는데 사용한다
+
+* localhost장비인수 설정하면 managed machine로 연결을 시도한다
+* controller machine에서 command를 실행하기 위해서 local_action을 이용한다
+* controller machine에서 연결을 시도하기 위해서 인수로 ansible_hostname변수를 이용한다
+* Tomcat 설치하고 Service를 시작하고 port가 준비되기를 기다린다.
+
+~~~
+---
+- hosts: webapps
+  tasks:
+  - name: Install Tomcat
+    yum:
+      name: tomcat7
+      state: installed
+
+  - name: Start Tomcat
+    service:
+      name: tomcat7
+      state: started
+  - name: Wait for Tomcat to start
+    wait_for:
+      port: 8080
+      state: started
+~~~
 
 #### The assemble module
+managed machine에서 여러개의 파일을 결합하여 다른이름으로 저장할때 사용한다
+
+* playbook에서 include를 허용하지 않거나, include에서 globbing한 config 파일을 가지고 있을때 유용하다
+* managed machine네서 ssh key를 모아서 root 사용자 home directory에 저장하는 예제:
+
+~~~
+---
+- hosts: all
+
+  tasks:
+  - name: Make a Directory in /opt
+    file:
+      path: /opt/sshkeys
+      state: directory
+      owner: root
+      group: root
+      mode: 0700
+
+  - name: Copy SSH keys over
+    copy:
+      src: "keys/{{ item }}.pub"
+      dest: "/opt/sshkeys/{{ item }}.pub"
+      owner: root
+      group: root
+      mode: 0600
+    with_items:
+      - dan
+      - kate
+      - mal
+
+  - name: Make the root users SSH config directory
+    file:
+      path: /root/.ssh
+      state: directory
+      owner: root
+      group: root
+      mode: 0700
+
+  - name: Build the authorized_keys file
+    assemble:
+      src: /opt/sshkeys
+      dest: /root/.ssh/authorized_keys
+      owner: root
+      group: root
+      mode: 0700
+~~~
 
 #### The add_host module
 
+동적으로 play에 새로운 장비를 추가할때 사용한다.
+* url module을 통하여 Configuration Mangement Database(CMDB)와 현재 추가된 내용을 확인할수 있다. (test필요)
+* 특정 Group에 추가할 수도 있고, group이 없으면 그룹을 생성 할 수도 있다.
+* hostname과 group을 인수로 받는다.
+* inventory file에서 취급되는 가뵤과 동일하게 취급된다, 그러므로 ansible_ssh_user, ansible_ssh_port를 지정할 수 있다.
+
+~~~
+---
+- name: Create infrastructure
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Make sure the mailserver exists
+      gce:
+        image: centos-6
+        name: mailserver
+        tags: mail
+        zone: us-central1-a
+      register: mailserver
+      when: '"mailserver" not in groups.all'
+
+- name: Add new machine to inventory
+  add_hosts:
+    name: mailserver
+    ansible_ssh_host: "{{ mailserver.instance_data[0].public_ip}}"
+    groups: tag_mail
+  when: not mailserver|skipped
+~~~
+
 #### The group_by module
+동적으로 group을 만든다.
+
+* 장비에서 fact기반의 group을 만들수 있다.
+* 장비가 추가될 그룸의 이름을 얻는 key라는 인수를 받는다.
+* 변수와 key를 결함하면 운영체제,가상기술등의 Group에 서버를 추가할 수 있다.
+* 운영체제별로 다른 Group을 원할 경우 예제:
+
+~~~
+---
+- name: Create operating system group
+  hosts: all
+  tasks:
+  - group_by: key=os_{{ ansible_distribution }}
+
+- name: Run on CentOS hosts only
+  hosts: os_CentOS
+  tasks:
+  - name: Install Apache
+    yum: name=httpd state=latest
+
+- name: Run on Ubuntu hosts only
+  hosts: os_Ubuntu
+  tasks:
+  - name: Install Apache
+    apt: pkg=apache2 state=latest
+~~~
+
+~~~
+---
+- name: Catergorize hosts
+  hosts: all
+  tasks:
+  - name: Gather hosts by OS
+    group_by:
+      key: "os_{{ ansible_os_family }}"
+
+- name: Install keys on RedHat
+  hosts: os_RedHat
+  tasks:
+  - name: Install SSL certificate
+    copy:
+      src: sslcert.pem
+      dest: /etc/pki/tls/private/sslcert.pem
+
+- name: Install keys on Debian
+  hosts: os_Debian
+  tasks:
+  - name: Install SSL certificate
+    copy:
+      src: sslcert.pem
+      dest: /etc/ssl/private/sslcert.pem
+
+~~~
 
 #### The slurp module
+This module works like fetch. It is used for fetching a base64- encoded blob containing the data in a remote file
+
+~~~
+---
+- name: Fetch a SSH key from a machine
+  hosts: bastion01
+  tasks:
+  - name: Fetch key
+    slurp:
+      src: /root/.ssh/id_rsa.pub
+      register: sshkey
+
+- name: Copy the SSH key to all hosts
+  hosts: all
+  tasks:
+  - name: Make directory for key
+    file:
+      state: directory
+      path: /root/.ssh
+      owner: root
+      group: root
+      mode: 0700
+
+  - name: Install SSH key
+    copy:
+      contents: "{{ hostvars.bastion01.sshkey|b64decode }}"
+      dest: /root/.ssh/authorized_keys
+      owner: root
+      group: root
+      mode: 0600
+~~~
 
 #### Windows playbook modules
+windows에서만 사용가능한 module로 "win_"으로 시작한다.
+
+~~~
+# Correct
+'C:\Users\Daniel\Documents\secrets.txt'
+'C:\Program Files\Fancy Software Inc\Directory'
+'D:\\' # \\ becomes \
+# Incorrect
+"C:\Users\Daniel\newcar.jpg" # \n becomes a new line
+'C:\Users\Daniel\Documents\' # \' becomes '
+~~~
 
 #### Cloud Infrastructure modules
 
 #### The AWS modules
+The AWS modules work similar to how most AWS tools work. 
+
+boto module설치가 필요하다
+
+* Centos/RHEL/Fedora: yum install python-boto
+* Ubuntu: apt-get install python-boto
+* Pip: pip install boto
+
+| Variable Name | Description |
+|---------------|-------------|
+| AWS_ACCESS_KEY | This is the access key for a valid IAM account |
+| AWS_SECRET_KEY | This is the secret key corresponding to the access key above |
+| AWS_REGION | This is the default region to use unless overridden |
+
+~~~
+---
+- name: Setup an EC2 instance
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: Create an EC2 machine
+    ec2:
+      key_name: daniel-keypair
+      instance_type: t2.micro
+      image: ami-b66ed3de
+      wait: yes
+      group: webserver
+      vpc_subnet_id: subnet-59483
+      assign_public_ip: yes
+    register: newmachines
+
+  - name: Wait for SSH to start
+    wait_for:
+      host: "{{ newmachines.instances[0].public_ip }}"
+      port: 22
+      timeout: 300
+    delegate_to: localhost
+
+  - name: Add the machine to the inventory
+    add_host:
+      hostname: "{{ newmachines.instances[0].public_ip }}"
+      groupname: new
+
+- name: Configure the new machines
+  hosts: new
+  sudo: yes
+  tasks:
+  - name: Install a MOTD
+    template:
+      src: motd.j2
+      dest: /etc/motd
+~~~
+
+
 
 ----
 ## Ansible Modules
