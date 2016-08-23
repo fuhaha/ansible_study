@@ -1,0 +1,33 @@
+---
+- name: Configure MySQL
+  hosts: mysqlservers
+  tasks:
+  - name: install MySql
+    yum:
+      name: mysql-server
+      state: installed
+
+  - name: Calculate InnoDB buffer pool size
+    set_fact:
+      innodb_buffer_pool_size_mb="{{ansible_memtotal_mb/2}}"
+
+  - name: Configure MySQL
+    template:
+      src: templates/my.cnf.j2
+      dest: /etc/my.cnf
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart mysql
+
+  - name: Start MySQL
+    service:
+      name: mysqld
+      state: started
+      enabled: yes
+
+  handlers:
+  - name: restart mysql
+    service:
+      name: mysqld
+      state: restarted

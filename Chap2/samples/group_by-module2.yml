@@ -1,0 +1,23 @@
+---
+- name: Catergorize hosts
+  hosts: all
+  tasks:
+  - name: Gather hosts by OS
+    group_by:
+      key: "os_{{ ansible_os_family }}"
+
+- name: Install keys on RedHat
+  hosts: os_RedHat
+  tasks:
+  - name: Install SSL certificate
+    copy:
+      src: sslcert.pem
+      dest: /etc/pki/tls/private/sslcert.pem
+
+- name: Install keys on Debian
+  hosts: os_Debian
+  tasks:
+  - name: Install SSL certificate
+    copy:
+      src: sslcert.pem
+      dest: /etc/ssl/private/sslcert.pem

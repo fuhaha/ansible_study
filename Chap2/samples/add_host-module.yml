@@ -1,0 +1,20 @@
+---
+- name: Create infrastructure
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Make sure the mailserver exists
+      gce:
+        image: centos-6
+        name: mailserver
+        tags: mail
+        zone: us-central1-a
+      register: mailserver
+      when: '"mailserver" not in groups.all'
+
+- name: Add new machine to inventory
+  add_hosts:
+    name: mailserver
+    ansible_ssh_host: "{{ mailserver.instance_data[0].public_ip}}"
+    groups: tag_mail
+  when: not mailserver|skipped

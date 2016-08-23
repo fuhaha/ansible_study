@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+  - name: wait on user input
+    pause:
+     prompt: "Warning! Press ENTER to continue or CTRL-C to quit."
+
+  - name: timed wait
+    pause:
+      seconds: 30

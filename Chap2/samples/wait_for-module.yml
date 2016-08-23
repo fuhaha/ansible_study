@@ -1,0 +1,16 @@
+---
+- hosts: webapps
+  tasks:
+  - name: Install Tomcat
+    yum:
+      name: tomcat7
+      state: installed
+
+  - name: Start Tomcat
+    service:
+      name: tomcat7
+      state: started
+  - name: Wait for Tomcat to start
+    wait_for:
+      port: 8080
+      state: started

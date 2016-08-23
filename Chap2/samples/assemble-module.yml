@@ -1,0 +1,39 @@
+---
+- hosts: all
+
+  tasks:
+  - name: Make a Directory in /opt
+    file:
+      path: /opt/sshkeys
+      state: directory
+      owner: root
+      group: root
+      mode: 0700
+
+  - name: Copy SSH keys over
+    copy:
+      src: "keys/{{ item }}.pub"
+      dest: "/opt/sshkeys/{{ item }}.pub"
+      owner: root
+      group: root
+      mode: 0600
+    with_items:
+      - dan
+      - kate
+      - mal
+
+  - name: Make the root users SSH config directory
+    file:
+      path: /root/.ssh
+      state: directory
+      owner: root
+      group: root
+      mode: 0700
+
+  - name: Build the authorized_keys file
+    assemble:
+      src: /opt/sshkeys
+      dest: /root/.ssh/authorized_keys
+      owner: root
+      group: root
+      mode: 0700
