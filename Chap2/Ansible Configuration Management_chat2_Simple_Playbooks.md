@@ -347,7 +347,7 @@ Ansible Play내부에 자신의 Fact를 만든다.
     set_fact:
       innodb_buffer_pool_size_mb="{{ansible_memtotal_mb/2}}"
 ~~~
-부분은 ansible_memtotal_mb fact로 부터 메모리 전체 크리글 가져와서 1/2계산하여 innodb_buffer_pool_size_mb fact를 만든다.
+부분은 ansible_memtotal_mb fact로 부터 메모리 전체 크기를 가져와서 1/2계산하여 innodb_buffer_pool_size_mb fact를 만든다.
 
 * 예제: template
 ~~~
@@ -419,6 +419,7 @@ innodb_buffer_pool_size = {{innodb_buffer_pool_size_mb|default(128) }}M
     service:
       name: tomcat7
       state: started
+
   - name: Wait for Tomcat to start
     wait_for:
       port: 8080
@@ -479,7 +480,7 @@ managed machine에서 여러개의 파일을 결합하여 다른이름으로 저
 * url module을 통하여 Configuration Mangement Database(CMDB)와 현재 추가된 내용을 확인할수 있다. (test필요)
 * 특정 Group에 추가할 수도 있고, group이 없으면 그룹을 생성 할 수도 있다.
 * hostname과 group을 인수로 받는다.
-* inventory file에서 취급되는 가뵤과 동일하게 취급된다, 그러므로 ansible_ssh_user, ansible_ssh_port를 지정할 수 있다.
+* inventory file에서 취급되는 값과 동일하게 취급된다, 그러므로 ansible_ssh_user, ansible_ssh_port를 지정할 수 있다.
 
 ~~~
 ---
@@ -497,7 +498,7 @@ managed machine에서 여러개의 파일을 결합하여 다른이름으로 저
       when: '"mailserver" not in groups.all'
 
 - name: Add new machine to inventory
-  add_hosts:
+  add_host:
     name: mailserver
     ansible_ssh_host: "{{ mailserver.instance_data[0].public_ip}}"
     groups: tag_mail
