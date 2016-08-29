@@ -12,3 +12,14 @@ ansible ubuntu_vm -a 'dpkg -l nginx'
 
 # NOTE: Doesn't seem to be possible to execute multiple commands in a
 # single invocation of 'ansible -a'
+
+# NOTE2: In my ansible 'hosts' file I have to specify the path to the
+# python 2 binary b/c on Archlinux 'python' points to Python 3
+
+# NOTE3: In 'Ansible Configuration Management' 1ed the sample
+# playbook for conditional execution in Ch3 has some syntax that
+# doesn't work in Ansible 2.0+, namely:
+#
+# debug: msg=... fail=yes
+#
+# If you remove 'fail=yes' the task works fine, however
