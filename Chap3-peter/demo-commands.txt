@@ -9,3 +9,6 @@ ansible ubuntu_vm -m command -a 'dpkg -l nginx'
 # Since 'command' is the default module, you don't need to specify it
 ansible ubuntu_vm -a 'dpkg -l git'
 ansible ubuntu_vm -a 'dpkg -l nginx'
+
+# NOTE: Doesn't seem to be possible to execute multiple commands in a
+# single invocation of 'ansible -a'
