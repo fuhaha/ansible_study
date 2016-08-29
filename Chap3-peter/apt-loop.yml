@@ -1,0 +1,26 @@
+# Simple Ansible playbook demonstrating loops and
+# conditionals
+
+
+- name: install packages
+  hosts: all
+  tasks:
+    - name: install with apt
+      apt: name={{item}} update_cache=yes cache_valid_time=3600
+      sudo: True
+      with_items:
+        - git
+        - nginx
+      when: ansible_os_family == "Debian"
+
+    - name: install with yum
+      yum: name={{item}}
+      sudo: True
+      with_items:
+        - git
+        - nginx
+      when: ansible_os_family == "Redhat"
+
+    -name: unexpected OS family
+     debug: msg="OS family {{ansible_os_family}} is not supported" fail=yes
+     when: not ansible_os_family == "Debian" or ansible_os_family == "Debian"
