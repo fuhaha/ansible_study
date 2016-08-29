@@ -13,8 +13,9 @@ ansible ubuntu_vm -a 'dpkg -l nginx'
 # NOTE: Doesn't seem to be possible to execute multiple commands in a
 # single invocation of 'ansible -a'
 
-# NOTE2: In my ansible 'hosts' file I have to specify the path to the
-# python 2 binary b/c on Archlinux 'python' points to Python 3
+# NOTE2: In my ansible 'hosts' file I explicity specify the path to the
+# python 2 binary. In some linux distro's, (i.e. Archlinux) 'python'
+# points to Python 3
 
 # NOTE3: In 'Ansible Configuration Management' 1ed the sample
 # playbook for conditional execution in Ch3 has some syntax that
@@ -23,3 +24,7 @@ ansible ubuntu_vm -a 'dpkg -l nginx'
 # debug: msg=... fail=yes
 #
 # If you remove 'fail=yes' the task works fine, however
+
+# NOTE4: Don't forget to customize the 'ansible.cfg' file from this
+# repository to match the path you 'git clone' to. Under [defaults]
+# it is the first setting 'inventory = '
