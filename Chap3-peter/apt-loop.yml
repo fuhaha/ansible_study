@@ -22,5 +22,5 @@
       when: ansible_os_family == "Redhat"
 
     - name: unexpected OS family
-      debug: msg="OS family {{ansible_os_family}} is not supported" fail=yes
+      debug: msg="OS family {{ansible_os_family}} is not supported"
       when: not ansible_os_family == "Debian" or ansible_os_family == "Debian"
