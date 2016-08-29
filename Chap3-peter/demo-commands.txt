@@ -3,3 +3,9 @@ ansible ubuntu_vm -m ping
 ansible-playbook -K apt-loop.yml
 # Commands from VM to verify that pkg's were installed
 dpkg -l {git,nginx}
+# Run the same command using Ansible's 'command' module
+ansible ubuntu_vm -m command -a 'dpkg -l git'
+ansible ubuntu_vm -m command -a 'dpkg -l nginx'
+# Since 'command' is the default module, you don't need to specify it
+ansible ubuntu_vm -a 'dpkg -l git'
+ansible ubuntu_vm -a 'dpkg -l nginx'
