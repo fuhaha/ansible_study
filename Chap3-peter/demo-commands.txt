@@ -1,0 +1,3 @@
+# Commands used in Peter's 2016-08-29 demo
+ansible ubuntu_vm -m ping
+ansible-playbook -K apt-loop.yml
