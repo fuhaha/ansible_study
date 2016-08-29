@@ -1,10 +1,13 @@
 # Commands used in Peter's 2016-08-29 demo
 ansible all -m ping
 ansible-playbook -K apt-loop.yml
-# Commands from VM to verify that pkg's were installed
-dpkg -l {git,nginx}
-rpm -q {git,nginx}
-# Run the same command using Ansible's 'command' module
+
+# Commands to run from within the VM to verify that pkg's were
+# installed
+dpkg -l {git,nginx} # Ubuntu
+rpm -q {git,nginx}  # RHEL
+
+# Run the same commands using Ansible's 'command' module
 # -a --args (arguments to pass to the module)
 ansible ubuntu_vm -m command -a 'dpkg -l git'
 ansible ubuntu_vm -m command -a 'dpkg -l nginx'
