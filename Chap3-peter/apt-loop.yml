@@ -21,6 +21,6 @@
         - nginx
       when: ansible_os_family == "Redhat"
 
-    -name: unexpected OS family
-     debug: msg="OS family {{ansible_os_family}} is not supported" fail=yes
-     when: not ansible_os_family == "Debian" or ansible_os_family == "Debian"
+    - name: unexpected OS family
+      debug: msg="OS family {{ansible_os_family}} is not supported" fail=yes
+      when: not ansible_os_family == "Debian" or ansible_os_family == "Debian"
