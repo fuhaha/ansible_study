@@ -19,8 +19,8 @@
       with_items:
         - git
         - nginx
-      when: ansible_os_family == "Redhat"
+      when: ansible_os_family == "RedHat"
 
     - name: unexpected OS family
       debug: msg="OS family {{ansible_os_family}} is not supported"
-      when: not ansible_os_family == "Debian" or ansible_os_family == "Redhat"
+      when: not ansible_os_family == "Debian" or ansible_os_family == "RedHat"
