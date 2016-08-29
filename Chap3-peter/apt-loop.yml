@@ -21,7 +21,7 @@
       when: ansible_os_family == "RedHat"
 
     - name: install with yum
-      yum: name={{item}} state=present update_cache=yes
+      yum: name={{item}} state=present update_cache=yes disable_gpg_check=yes
       become: True
       with_items:
         - git
