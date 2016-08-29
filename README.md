@@ -28,6 +28,12 @@
     * [1장: 앤시블 시작](Chap1/Ansible Configuration Management_chat1.md)
     * [2장: 간단한 플레이북](Chap2/Ansible Configuration Management_chat2_Simple_Playbooks.md)
     * 3장: 플레이북 심화 내용
+      * [ansible.cfg - 설정 파일](Chap3-peter/ansible.cfg)
+        * inventory 내용을 git clone 후 이동한 폴더로 변경 필요
+      * [apt-loop.yml - Debian/Redhat 구분 실행 파일](Chap3-peter/apt-loop.yml)
+      * [demo-commands.txt - 실습 명령어 모음](Chap3-peter/demo-commands.txt)
+      * [hosts - 실습 대상 호스트](Chap3-peter/hosts)
+        * 연결 가능한 Debian 2대, Redhat 1대를 준비하여 해당 IP 주소로 적절히 변경 필요
     * 4장: 대규모 프로젝트
     * 5장: 사용자 정의 모듈
 
