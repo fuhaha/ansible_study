@@ -7,7 +7,7 @@
   tasks:
     - name: install with apt
       apt: name={{item}} update_cache=yes cache_valid_time=3600
-      sudo: True
+      become: True
       with_items:
         - git
         - nginx
@@ -15,7 +15,7 @@
 
     - name: install with yum
       yum: name={{item}}
-      sudo: True
+      become: True
       with_items:
         - git
         - nginx
