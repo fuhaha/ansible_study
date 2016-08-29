@@ -9,19 +9,12 @@ rpm -q {git,nginx}  # RHEL
 
 # Run the same commands using Ansible's 'command' module
 # -a --args (arguments to pass to the module)
-ansible ubuntu_vm -m command -a 'dpkg -l git'
-ansible ubuntu_vm -m command -a 'dpkg -l nginx'
-ansible rhel_vm -m command -a 'rpm -q git'
-ansible rhel_vm -m command -a 'rpm -q nginx'
+ansible ubuntu_vm -m command -a 'dpkg -l git nginx'
+ansible rhel_vm -m command -a 'rpm -q git nginx'
 
 # Since 'command' is the default module, you don't need to specify it
-ansible ubuntu_vm -a 'dpkg -l git'
-ansible ubuntu_vm -a 'dpkg -l nginx'
-ansible rhel_vm -a 'rpm -q git'
-ansible rhel_vm -a 'rpm -q nginx'
-
-# NOTE: Doesn't seem to be possible to execute multiple commands in a
-# single invocation of 'ansible -a'
+ansible ubuntu_vm -a 'dpkg -l git nginx'
+ansible rhel_vm -a 'rpm -q git nginx'
 
 # NOTE2: In my ansible 'hosts' file I explicity specify the path to the
 # python 2 binary because in some linux distros like Archlinux 'python'
