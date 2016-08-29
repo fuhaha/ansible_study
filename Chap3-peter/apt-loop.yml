@@ -13,6 +13,13 @@
         - nginx
       when: ansible_os_family == "Debian"
 
+    - name: Add EPEL repo
+      yum_repository:
+        name: epel
+        description: EPEL yum repo
+        baseurl: http://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+        when: ansible_os_family == "RedHat"
+
     - name: install with yum
       yum: name={{item}}
       become: True
