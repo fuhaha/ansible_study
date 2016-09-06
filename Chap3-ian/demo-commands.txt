@@ -1,0 +1,35 @@
+# Commands used in Ian's 2016-09-06 demo
+ansible all -m ping
+ansible-playbook -s codes/async.yml
+
+# Commands to run from within the VM to verify that pkg's were
+# installed
+dpkg -l {git,nginx} # Ubuntu
+rpm -q {git,nginx}  # RHEL
+
+# Run the same commands using Ansible's 'command' module
+# -a --args (arguments to pass to the module)
+ansible ubuntu_vm -m command -a 'dpkg -l git nginx'
+ansible rhel_vm -m command -a 'rpm -q git nginx'
+
+# Since 'command' is the default module, you don't need to specify it
+ansible ubuntu_vm -a 'dpkg -l git nginx'
+ansible rhel_vm -a 'rpm -q git nginx'
+
+# NOTE2: In my ansible 'hosts' file I explicity specify the path to the
+# python 2 binary because in some linux distros like Archlinux 'python'
+# points to Python 3 instead of Python 2
+
+# NOTE3: In 'Ansible Configuration Management' 1st ed the sample
+# playbook for conditional execution in Ch3 has some syntax that
+# doesn't work in Ansible 2.0+, namely:
+#
+# debug: msg=... fail=yes
+#
+# If you remove 'fail=yes' the task works fine, however
+
+# NOTE4: Don't forget to customize the 'ansible.cfg' file from
+# 'ansible_study.git'. Under [defaults] the first setting is
+# 'inventory = ' which specifies the location of your ansible
+# 'hosts' file. The default is '/etc/ansible/hosts'; change
+# it to the sub-directory into which you ran 'git clone'

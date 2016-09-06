@@ -1,0 +1,8 @@
+---
+- name: Downloads a file using the same proxy as the controlling machine
+  hosts: all
+  tasks:
+   - name: Download file
+     get_url: dest=/var/tmp/file.tar.gz url=http://server/file.tar.gz
+     environment:
+       http_proxy: "{{ lookup('env', 'http_proxy') }}"

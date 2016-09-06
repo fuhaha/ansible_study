@@ -1,0 +1,15 @@
+---
+- name: Setup DNS Servers
+  hosts: allnameservers
+  tasks:
+   - name: Install BIND
+     yum: name=named state=installed
+
+- name: Setup Slaves
+  hosts: slavenamesservers
+  tasks:
+   - name: Get the masters IP
+     set_fact: dns_master=.{{ hostvars.ns1.ansible_default_ipv4.address }}.
+
+   - name: Configure BIND
+     template: dest=/etc/named.conf src=templates/named.conf.j2

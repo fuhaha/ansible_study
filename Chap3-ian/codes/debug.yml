@@ -1,0 +1,10 @@
+---
+- name: Demonstrate the debug module
+  hosts: ansibletest
+  user: root
+  vars:
+    hostcount: 5
+  tasks:
+   - name: Print interface
+     debug: msg="{{ item }}"
+     with_items: ansible_interfaces

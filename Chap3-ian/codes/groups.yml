@@ -1,0 +1,18 @@
+---
+- name: Configure the database
+  hosts: dbservers
+  user: root
+  tasks:
+   - name: Install mysql
+     yum: name={{ item }} state=installed
+     with_items:
+      - mysql-server
+      - MySQL-python
+
+   - name: Start mysql
+     service: name=mysqld state=started enabled=true
+
+
+   - name: Create a user for all app servers
+     with_items: groups.appservers
+     mysql_user: name=kate password=test host=${hostvars.[item].ansible_eth0.ipv4.address} state=present

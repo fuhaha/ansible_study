@@ -1,0 +1,14 @@
+---
+- name: Demonstrate with_hosts
+  hosts: all
+  tasks:
+   - name: Make key directory
+     file: path=/root/.sshkeys ensure=directory mode=0700 owner=root group=root
+  
+   - name: Upload public keys
+     copy: src={{ item }} dest=/root/.sshkeys mode=0600 owner=root group=root
+     with_fileglob:
+      - keys/*.pub
+  
+   - name: Assemble keys into authorized_keys file
+     assemble: src=/root/.sshkeys dest=/root/authorized_keys mode=0600 owner=root group=root

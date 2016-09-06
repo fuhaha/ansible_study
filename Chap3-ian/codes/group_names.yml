@@ -1,0 +1,14 @@
+---
+- name: Setup SSH
+  hosts: sshservers
+  tasks:
+   - name: For secure machines
+     set_fact: sshconfig=files/ssh/sshd_config_secure
+     when: "'secure' in group_names"
+
+   - name: For non-secure machines
+     set_fact: sshconfig=files/ssh/sshd_config_default
+     when: "'secure' not in group_names"
+
+   - name: Copy over the config
+     copy: src={{ sshconfig }} dest=/tmp/sshd_config

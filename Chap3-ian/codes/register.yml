@@ -1,0 +1,11 @@
+---
+- name: Using register
+  hosts: ansibletest
+  user: root
+  tasks:
+   - name: Get /tmp info
+     file: dest=/tmp state=directory
+     register: tmp
+
+   - name: Set mode on /var/tmp
+     file: dest=/tmp/subtmp mode={{ tmp.mode }} state=directory

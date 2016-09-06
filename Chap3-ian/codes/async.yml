@@ -1,0 +1,9 @@
+- hosts: all
+  tasks:
+    - name: Install mlocate
+      apt: name=mlocate state=installed
+
+    - name: Run updatedb
+      command: /usr/bin/updatedb
+      async: 300
+      poll: 10

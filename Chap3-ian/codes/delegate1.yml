@@ -1,0 +1,7 @@
+---
+- name: Fetch configuration from all webservers
+  hosts: all
+  tasks:
+   - name: Get config
+     get_url: dest=configs/{{ ansible_hostname }} force=yes url=http://www.naver.com
+     delegate_to: localhost

@@ -1,0 +1,11 @@
+---
+- name: Install an Apache config file
+  hosts: ansibletest
+  user: root
+  tasks:
+   - name: Get the best match for the machine
+     copy: dest=/etc/apache.conf src={{ item }}
+     first_available_file:
+      - files/apache/{{ ansible_os_family }}-{{ ansible_architecture }}.cfg
+      - files/apache/default-{{ ansible_architecture }}.cfg
+      - files/apache/default.cfg

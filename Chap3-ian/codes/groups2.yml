@@ -1,0 +1,8 @@
+---
+hosts: all
+tasks:
+- name: Setup known hosts
+  hosts: all
+  tasks:
+   - name: Create known_hosts
+     template: src=templates/known_hosts.j2 dest=/etc/ssh/ssh_known_hosts owner=root group=root mode=0644
