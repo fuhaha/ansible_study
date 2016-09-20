@@ -53,12 +53,42 @@ $ ansible-playbook -s codes/async.yml
 	* 네트워크 작업 바깥에 접근을 점검할 수 있게 외부 서버를 사용하기
 
 ### 추가 변수
+* Ansible이 제공하는 변수
+* hostvars
+	* 현재 play 가 다루고 있는 모든 hosts를 가져오는 변수
+	* hostvars와 다른 변수를 혼합해서 사용할 수 있다.
+	* 예를 들어, 이름이 ns1 인 서버의 리눅스 배포판명을 가져오고 싶다면 ${hostvars.ns1.ansible_distribution}을 쓰면된다.
+	* hostvars 를 쓰면, template 를 좀 더 추상화 할 수 있다.
+	* 예) 머신 이름이 the_machine 이라는 변수에 있고, 이 머신의 ip주소를 가져오고 싶다면 {{hostvars.[the_machine].default_ipv4.address}} 라고 작성하면된다.
+* groups
+	* inventory group 에서 지정한 그룹에 속한 모든 hosts를 가져오는 변수.
+	* groups 는 실제 hosts에 대한 내용을 가지진 않는다. 단지 inventory 에 있는 이름만 가지고 있다.
+	* hostvars를 이용해서 해당 이름을 가진 host 정보를 가져올 수 있다.
+* inventory_hostname
+	* hostname 을 inventory 에 저장된 이름으로 사용하도록하는 변수
+	* 이 host에 대해서는 setup module 을 실행하고 싶지 않거나, 다양한 이유에서 setup module 이 정상적이지 않을 경우 사용
+* inventory_hostname_short
+	* inventory_hostname 와 비슷하지만, 첫 번쨰 . 이전의 문자열만 포함한다.
+	* 예를 들어, host.example.com 이 있다면, host 를 반환한다.
+* inventory_dir
+	* inventory 파일이 포함된 경로
+* inventry_file
+	* inventory_dir 과 비슷하지만, 파일명만 가져온다.
 
 ### 변수로 파일 찾기
+* 변수를 이용해서 파일을 찾을 수 있다
+* 변수의 값을 가져오려면 {{ }} 를 이용
+* 예) copy: src=files/nrpe.{{ansible_architecture}}.conf
+* first_available_file 을 이용하는 방법 [참고](https://github.com/fuhaha/ansible_study/blob/master/Chap3-ian/codes/filevariables.yml)
 
 ### 환경 변수
+* unix command 를 실행하기 위한, 환경변수를 설정할 수 있음
+* 예를 들어, aws shell 을 이용해서 AWS S3 에 파일을 업로드하고 싶다면 환경변수에 access / secret key 를 저장할 수 있다.
+* 내부적으로 환경변수 설정을 위해 파이썬 코드를 사용하기에, 한 모듈에서 이미 환경변수를 설정했다면 다른 곳에서도 사용이 가능하다
 
 ### 외부 데이터 검색
+* 버전 0.9 부터 lookup 플러그인 제공
+* 직접 호출하거나, with_* keys 를 이용해서 실행 가능
 
 ### 결과 저장
 
