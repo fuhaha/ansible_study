@@ -185,7 +185,7 @@ Ansible에서 Role을 관리하기 위한 단계 :
 
 5. common, apache, website1, website2 Role을 사용하고자 한다면 다음 예제와 같은 디렉토리 구조로 생성
 
-    ![Ansible_Configuration_Management__2nd_Edition_pdf__page_84_of_122_](/var/folders/vl/20cj_qgn2mqbj70m50dzgc2m0000gn/T/DMD22B8C04F-EC14-4B1B-927B-6669E450CA2A/Ansible_Configuration_Management__2nd_Edition_pdf__page_84_of_122_.jpg)
+    ![Ansible_Configuration_Management__2nd_Edition_pdf__page_84_of_122_](Chapter4_role_directory_structure.jpg)
 
    <u>website1.yml</u> : common, apache, website1 Role을 website1 그룹 장비에 적용하는 PlayBook
 
