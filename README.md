@@ -34,7 +34,7 @@
       * [demo-commands.txt - 실습 명령어 모음](Chap3-peter/demo-commands.txt)
       * [hosts - 실습 대상 호스트](Chap3-peter/hosts)
         * 연결 가능한 Debian 2대, Redhat 1대를 준비하여 해당 IP 주소로 적절히 변경 필요
-    * 4장: 대규모 프로젝트
+    * [4장: 대규모 프로젝트](Chap4/Chapter4_Large_Project.md)
     * 5장: 사용자 정의 모듈
 
   * 진행 기간 : 각 장에 한 번씩, 총 5번 모일 예정
