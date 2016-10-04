@@ -27,7 +27,7 @@
 
 ## 배시로 모듈 작성
 
-- 1. 스크립트 작성
+- 1. 스크립트 작성 [Source](bash_exercises/hostname_v1)
 
 ![스크린샷](01_writing_1st_script.png)
 
@@ -36,10 +36,11 @@
 ![스크린샷](02_1st_script_exec_error.png)
 
 - 3. 해결책: ansible 실행을 위한 환경 변수 source
+  - https://github.com/ansible/ansible/issues/5105
 
 ![스크린샷](03_1st_script_exec_solution.png)
 
-- 4. 두 번째: 개선된 스크립트
+- 4. 두 번째: 개선된 스크립트 [Source](bash_exercises/hostname_v2)
 
 ![스크린샷](04_2nd_script_file_screenshot.png)
 
@@ -60,6 +61,8 @@
 ![스크린샷](08_bash_playbook_module_exec_failure_but_hostname_changed.png)
 
 - 9. 세 번째: JSON을 echo하도록 개선한 스크립트
+  [Source](bash_exercises/module/library/hostname)
+  - http://stackoverflow.com/questions/34960794/why-does-my-custom-ansible-module-fail
 
 ![스크린샷](09_bash_playbook_module_source_modification.png)
 

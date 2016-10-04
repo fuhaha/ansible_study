@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+# This is potentially dangerous
+source ${1}
+
+OLDHOSTNAME="$(hostname)"
+CHANGED="False"
+
+if [ ! -z "$hostname" -a "${hostname}x" != "${OLDHOSTNAME}x" ];
+  then
+  hostname $hostname
+  OLDHOSTNAME="$hostname"
+  CHANGED="True"
+fi
+
+echo "hostname=${OLDHOSTNAME} changed=${CHANGED}"
+exit 0

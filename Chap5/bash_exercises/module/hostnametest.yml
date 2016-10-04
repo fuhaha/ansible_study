@@ -1,0 +1,6 @@
+---
+- name: Test the hostname file
+  hosts: testmachine
+  tasks:
+    - name: Set the hostname
+      hostname: hostname=testmachine.example.com
