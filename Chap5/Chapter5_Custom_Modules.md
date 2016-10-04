@@ -2,7 +2,7 @@
 
 ## 작성자
 - Bash: Ian Y. Choi
-- Python: (TO-DO)
+- Python: SeongSoo Cho
 
 ## 개요
 
@@ -70,3 +70,45 @@
 
 ![스크린샷](10_bash_playbook_module_exec_success.png)
 
+----------
+
+## Python 으로 Custom 모듈 작성
+
+* Python 으로 module 개발은 boilerplate 를 사용 ( 코드량 대폭 감소 가능)
+* Module의 Arguments는 자동으로 처리됨
+* Output 은 JSON 으로 자동 변환
+* Ansible upstream 은 boilerplate 로 작성된 Python 플러그인만 accept 함.
+
+boilerplate 는 AnsibleModule 클래스를 이용해서 작업을 진행하고, 아래오 가타은 helper 함수를 지원한다.
+
+* run_command : 외부 명령어를 실행하고, return code, stdout, stderr 를 반환한다.
+* exit_json : module 이 작업을 끝내면, ansible 에게 값을 반환한다.
+* fail_json : ansible 에게 에러가 발생했음을 메세지와 함께 알려준다.
+
+### Sample Code
+```Python
+from ansible.module_utils.basic import AnsibleModule
+
+def main():
+    module = AnsibleModule(
+        argument_spec = dict(
+            state     = dict(default='present', choices=['present', 'absent']),
+            name      = dict(required=True),
+            enabled   = dict(required=True, type='bool'),
+            something = dict(aliases=['whatever'])
+        )
+    )
+
+if __name__ == '__main__':
+    main()
+```
+
+### 모듈 테스트
+ansible 에서 제공해주는 test-module 을 이용하여 간편하게 모듈 테스트 가능
+
+```
+git clone git://github.com/ansible/ansible.git --recursive
+source ansible/hacking/env-setup
+
+ansible/hacking/test-module -m ./timetest.py
+```
