@@ -4,8 +4,7 @@
 
 * 이 저장소는 OpenStack 자동 배포와 관련된 여러 구성 관리 도구 중
   Ansible을 스터디한 자료를 모아둔 곳입니다.
-  기 스터디 참여 구성원분들 중 여름에 시간 되시는 분들과 함께
-  짧은 기간 모여서 진행하였습니다.
+  2016년 8-10월 이라는 약 3달 기간 동안 모여서 진행하였습니다.
 * This repository data is for studying Ansible to broaden the
   knowledge on automated OpenStack deployment.
 
@@ -35,7 +34,7 @@
       * [hosts - 실습 대상 호스트](Chap3-peter/hosts)
         * 연결 가능한 Debian 2대, Redhat 1대를 준비하여 해당 IP 주소로 적절히 변경 필요
     * [4장: 대규모 프로젝트](Chap4/Chapter4_Large_Project.md)
-    * 5장: 사용자 정의 모듈
+    * [5장: 사용자 정의 모듈](Chap5/Chapter5_Custom_Modules.md)
 
   * 진행 기간 : 각 장에 한 번씩, 총 5번 모일 예정
     (상황에 따라 변경 가능)
