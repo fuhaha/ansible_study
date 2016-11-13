@@ -4,11 +4,14 @@
 
 * 이 저장소는 OpenStack 자동 배포와 관련된 여러 구성 관리 도구 중
   Ansible을 스터디한 자료를 모아둔 곳입니다.
-  2016년 8-10월 이라는 약 3달 기간 동안 모여서 진행하였습니다.
 * This repository data is for studying Ansible to broaden the
   knowledge on automated OpenStack deployment.
 
 *****************************************************************
+
+* 본 스터디는 NAVER D2 개발자 지원 프로그램과 함께 하였습니다.
+ * 커뮤니티 지원: http://developer.naver.com/wiki/pages/communityStatus
+ * NAVER D2 공식 홈페이지: http://d2.naver.com/
 
 ## 스터디 개요 (Overview)
 
@@ -36,9 +39,16 @@
     * [4장: 대규모 프로젝트](Chap4/Chapter4_Large_Project.md)
     * [5장: 사용자 정의 모듈](Chap5/Chapter5_Custom_Modules.md)
 
-  * 진행 기간 : 각 장에 한 번씩, 총 5번 모일 예정
-    (상황에 따라 변경 가능)
-  * 모임 시간은 구성원들간 조율을 통해 flexible하게 진행
+  * 스터디 진행
+    * 2016-08-09: 1장 앞 부분
+    * 2016-08-18: 1장 뒷 부분
+    * 2016-08-23: 2장
+    * 2016-08-29: 3장 앞 부분
+    * 2016-09-06: 3장 뒷 부분
+    * 2016-09-20: 3장 뒷 부분 추가
+    * 2016-09-30: 4장
+    * 2016-10-04: 5장
+
 
 ## 참고 자료 (Reference)
 
