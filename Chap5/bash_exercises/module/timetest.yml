@@ -1,0 +1,6 @@
+---
+- name: Test time related things
+  hosts: testmachine
+  tasks:
+    - name: Test time
+      timetest:
