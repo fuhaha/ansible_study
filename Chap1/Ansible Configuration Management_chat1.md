@@ -115,7 +115,7 @@ $ sudo make install
 	2-1) passwd 설정
 		-k : 인자 사용
 
-	2-2) /etc/anbile/ansible.cfg
+	2-2) /etc/ansible/ansible.cfg
 	~~~~
 	ask_sudo_pass = true
 	~~~~
