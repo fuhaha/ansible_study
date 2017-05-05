@@ -27,8 +27,8 @@
     * 서로 긍정적인 피드백 및 토론하기
 
   * 내용
-    * [1장: 앤시블 시작](Chap1/Ansible\ Configuration\ Management_chat1.md)
-    * [2장: 간단한 플레이북](Chap2/Ansible\ Configuration\ Management_chat2_Simple_Playbooks.md)
+    * [1장: 앤시블 시작](Chap1/Ansible Configuration Management_chat1.md)
+    * [2장: 간단한 플레이북](Chap2/Ansible Configuration Management_chat2_Simple_Playbooks.md)
     * 3장: 플레이북 심화 내용
       * [ansible.cfg - 설정 파일](Chap3-peter/ansible.cfg)
         * inventory 내용을 git clone 후 이동한 폴더로 변경 필요
